@@ -19,6 +19,7 @@ let intervaloId = null;
 
 
 //troca de fundo e imagem com data-contextto (tag html) diferente
+
 botaoFoco.addEventListener('click', () => {
     tempoDecorridoEmSegundos=1500;
     alterarContexto('foco');
@@ -34,17 +35,17 @@ botaoCurto.addEventListener('click', () => {
 });
 
 botaoLongo.addEventListener('click', () => {
-    tempoDecorridoEmSegundos=900; //altera no codigo, mas nao altera na tela ↓↓↓
+    tempoDecorridoEmSegundos=900; 
     alterarContexto('descanso-longo');
     botaoLongo.classList.add('active');
     
 });
 
 function alterarContexto (contexto) {
-    mostrarTimer(); //necessario para mudanca funcionar na tela ↑↑↑
+    mostrarTimer(); 
     botoes.forEach(function(elementoDaLista){
         elementoDaLista.classList.remove('active');
-    }) //remove avite em todos elementos escolhidos antes de colocar no elemento em foco
+    }) 
     html.setAttribute('data-contexto', contexto);
     img.setAttribute('src', `/imagens/${contexto}.png`);
     switch (contexto) {
@@ -68,7 +69,8 @@ function alterarContexto (contexto) {
 
 
 
-//toca ou disliga musica quando aperta toggle-checkbox
+//toca ou disliga musica quando aperta switch
+
 musica.loop = true;
 musicaFocoInput.addEventListener('change', ()=> {
     if(musica.paused) {
@@ -82,10 +84,10 @@ musicaFocoInput.addEventListener('change', ()=> {
 
 
 //contagem regressiva
+
 const contagemRegressiva = () => {
     if (tempoDecorridoEmSegundos<= 0) {
         somDeFim.play();
-        //alert('Tempo finalizado');
         zerar();
         return
     }
@@ -96,40 +98,28 @@ const contagemRegressiva = () => {
 startPauseBt.addEventListener('click', iniciarOupausar);
 
 function iniciarOupausar() {
-    //se intervaloId = true (tem algum valor)
     if(intervaloId){
-        somDePausa.play(); //como prof fez
+        somDePausa.play(); 
         zerar();
-        trocaComecarEPausar.textContent = 'Começar'; //troca texto dentro de elemento
-        trocaComecarEPausar.previousElementSibling.setAttribute('src','/imagens/play_arrow.png'); //troca imagem no elementoanterior de texto
-        return; //para poder interomper a exacucao de codigo
+        trocaComecarEPausar.textContent = 'Começar'; 
+        trocaComecarEPausar.previousElementSibling.setAttribute('src','/imagens/play_arrow.png'); 
+        return; 
     }
-    somDeComeco.play(); //como prof fez
-    //primeiro parametro o metodo que vai ser executado, segundo - com quanto temto vai ser executado
+    somDeComeco.play(); 
     intervaloId = setInterval(contagemRegressiva, 1000);
-                                                //1000=1segunda
     trocaComecarEPausar.textContent = 'Pausar';
     trocaComecarEPausar.previousElementSibling.setAttribute('src','/imagens/pause.png');
 }
 
 function zerar() {
-    //interompe a exacucao de codigo
     clearInterval(intervaloId);
     intervaloId=null;
 }
 
-/* como eu resolvi!!
-startPauseBt.addEventListener('click', ()=> {
-    if(intervaloId==null){
-        somDePausa.play();
-    } else{
-        somDeComeco.play();
-    }
-})*/
 
 function mostrarTimer () {
     const tempo = new Date (tempoDecorridoEmSegundos*1000);
-    const tempoFormotado = tempo.toLocaleString('pt-Br', {minute: '2-digit', second: '2-digit'}); //formotando tempo de segundas para minutos e segundos
+    const tempoFormotado = tempo.toLocaleString('pt-Br', {minute: '2-digit', second: '2-digit'}); 
     tempoNaTela.innerHTML= `${tempoFormotado}`;
 }
 
